@@ -1,0 +1,106 @@
+
+{% extends "base.html" %}
+
+{% block title %}Szögsüllyesztés számítások{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Szögsüllyesztés számítások</h1>
+
+    <form method="POST">
+        <div class="mb-3">
+            <label for="muvelet" class="form-label">Számítás típusa:</label>
+            <select class="form-select" id="muvelet" name="muvelet" onchange="mutasdMezoket()" required>
+                <option value="" {% if not muvelet %}selected{% endif %}>-- Válassz --</option>
+                <option value="1" {% if muvelet == '1' %}selected{% endif %}>1. Átmérő számítás mélységhez</option>
+                <option value="2" {% if muvelet == '2' %}selected{% endif %}>2. Szükséges mélység átmérőhöz</option>
+                <option value="3" {% if muvelet == '3' %}selected{% endif %}>3. Sugár korrekció számítás mélységhez</option>
+                <option value="4" {% if muvelet == '4' %}selected{% endif %}>4. Hossz korrekció átmérőhöz</option>
+                <option value="5" {% if muvelet == '5' %}selected{% endif %}>5. Sülyesztés mélység furatba vett érintőtől, átmérő eléréséhez</option>
+            </select>
+        </div>
+
+        <!-- MINDEN számítás mezőit előkészítjük, és csak a kiválasztott látszik -->
+        <div id="muvelet-1" class="muvelet-mezo" style="display:none">
+            <label>Szerszám csúcs Szög (°):</label>
+            <input class="form-control" type="number" step="any" name="szog_1">
+            <label>Rajzi mélység (mm):</label>
+            <input class="form-control" type="number" step="any" name="melyseg">
+        </div>
+
+        <div id="muvelet-2" class="muvelet-mezo" style="display:none">
+            <label>Szerszám csúcs Szög (°):</label>
+            <input class="form-control" type="number" step="any" name="szog_2">
+            <label>Rajzi Átmérő (mm):</label>
+            <input class="form-control" type="number" step="any" name="atmero">
+        </div>
+
+        <div id="muvelet-3" class="muvelet-mezo" style="display:none">
+            <label>Szerszám csúcs Szög (°):</label>
+            <input class="form-control" type="number" step="any" name="szog_3">
+            <label>Mért mélység (mm):</label>
+            <input class="form-control" type="number" step="any" name="m_melyseg">
+            <label>Rajzi mélység (mm):</label>
+            <input class="form-control" type="number" step="any" name="r_melyseg">
+        </div>
+
+        <div id="muvelet-4" class="muvelet-mezo" style="display:none">
+            <label>Szerszám csúcs Szög (°):</label>
+            <input class="form-control" type="number" step="any" name="szog_4">
+            <label>Mért átmérő (mm):</label>
+            <input class="form-control" type="number" step="any" name="mert_atmero">
+            <label>Rajzi átmérő (mm):</label>
+            <input class="form-control" type="number" step="any" name="rajzi_atmero">
+        </div>
+
+        <div id="muvelet-5" class="muvelet-mezo" style="display:none">
+            <label>Szerszám csúcs Szög (°):</label>
+            <input class="form-control" type="number" step="any" name="szog_5">
+            <label>Érintett furat átmérője (mm):</label>
+            <input class="form-control" type="number" step="any" name="furat">
+            <label>Süllyesztés átmérő (mm):</label>
+            <input class="form-control" type="number" step="any" name="sullyn">
+        </div>
+
+        <button class="btn btn-success mt-3" type="submit">Számítás</button>
+    </form>
+
+    {% if eredmeny is not none %}
+        <div class="alert alert-primary mt-4">
+            <strong>Eredmény:</strong> {{ "%.2f"|format(eredmeny) }} mm
+        </div>
+    {% endif %}
+
+    {% if hiba %}
+        <div class="alert alert-danger mt-3">{{ hiba }}</div>
+    {% endif %}
+</div>
+
+<script>
+
+    function mutasdMezoket() {
+    // Először minden mezőt elrejtünk és letiltunk
+    document.querySelectorAll('.muvelet-mezo').forEach(div => {
+        div.style.display = 'none';
+        div.querySelectorAll("input").forEach(input => input.disabled = true);
+    });
+
+    const muvelet = document.getElementById('muvelet').value;
+    if (muvelet) {
+        const target = document.getElementById('muvelet-' + muvelet);
+        if (target) {
+            target.style.display = 'block';
+            target.querySelectorAll("input").forEach(input => input.disabled = false);
+        }
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+        const aktualis = "{{ muvelet }}";
+        if (aktualis) {
+            document.getElementById("muvelet").value = aktualis;
+        }
+        mutasdMezoket();
+    });
+    </script>
+    {% endblock %}

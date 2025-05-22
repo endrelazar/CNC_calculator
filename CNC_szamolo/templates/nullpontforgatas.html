@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Nullpont forgatás számítás{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Nullpont forgatás számítása</h1>
+
+    <form method="POST">
+        <!-- Gép típus választó -->
+        <div class="mb-3">
+            <label for="gep_tipus" class="form-label">Gép típusa:</label>
+            <select class="form-select" id="gep_tipus" name="gep_tipus" onchange="valtozas()">
+                <option value="">-- Válassz gépet --</option>
+                <option value="vizszintes" {% if gep_tipus == 'vizszintes' %}selected{% endif %}>Vízszintes CNC gép</option>
+                <option value="fuggoleges" {% if gep_tipus == 'fuggoleges' %}selected{% endif %}>Függőleges CNC gép</option>
+            </select>
+        </div>
+
+        <!-- Vízszintes gép mezők -->
+        <div id="vizszintes-mezok" class="gep-mezo" style="display:none;">
+            <div class="mb-3">
+                <label>Gép X nullpont:</label>
+                <input type="number" step="any" name="gép_x" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>Gép Z nullpont:</label>
+                <input type="number" step="any" name="gép_z_v" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>Munkadarab X nullpont:</label>
+                <input type="number" step="any" name="mkd_x" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>Munkadarab Z nullpont:</label>
+                <input type="number" step="any" name="mkd_z_v" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>Y tengely menti forgatás Szög (°):</label>
+                <input type="number" step="any" name="szog_v" class="form-control">
+            </div>
+        </div>
+
+        <!-- Függőleges gép mezők -->
+        <div id="fuggoleges-mezok" class="gep-mezo" style="display:none;">
+            <div class="mb-3">
+                <label>Gép Y nullpont:</label>
+                <input type="number" step="any" name="gép_y" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>Gép Z nullpont:</label>
+                <input type="number" step="any" name="gép_z_f" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>Munkadarab Y nullpont:</label>
+                <input type="number" step="any" name="mkd_y" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>Munkadarab Z nullpont:</label>
+                <input type="number" step="any" name="mkd_z_f" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>X tengely menti forgatás Szög (°):</label>
+                <input type="number" step="any" name="szog_f" class="form-control">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Számítás</button>
+    </form>
+
+    {% if eredmeny %}
+        <div class="alert alert-success mt-4">
+            <strong>Eredmény:</strong> {{ eredmeny }}
+        </div>
+    {% endif %}
+
+    {% if hiba %}
+        <div class="alert alert-danger mt-4">{{ hiba }}</div>
+    {% endif %}
+</div>
+
+<!-- JS: mezők váltása géptípus szerint -->
+<script>
+function valtozas() {
+    const gep = document.getElementById("gep_tipus").value;
+    document.querySelectorAll('.gep-mezo').forEach(div => div.style.display = 'none');
+    if (gep === "vizszintes") {
+        document.getElementById("vizszintes-mezok").style.display = 'block';
+    } else if (gep === "fuggoleges") {
+        document.getElementById("fuggoleges-mezok").style.display = 'block';
+    }
+}
+
+// oldalbetöltéskor visszaállít
+document.addEventListener("DOMContentLoaded", valtozas);
+</script>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}CNC Számítási Központ{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">CNC Számítási Központ</h1>
+
+    <div class="row g-4 justify-content-center">
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-3">Szögsüllyesztési számítások</h5>
+                    <a href="/sullyesztes" class="btn btn-primary w-100">Megnyitás</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-3">Megmunkálási paraméter számítások</h5>
+                    <a href="/megmunkalas" class="btn btn-success w-100">Megnyitás</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-3">Munkadarab nullpontszámítás szögforgatással</h5>
+                    <a href="/nullpontforgatas" class="btn btn-warning w-100">Megnyitás</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

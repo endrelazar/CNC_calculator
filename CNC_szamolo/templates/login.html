@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bejelentkezés</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+
+    <h1 class="mb-4">Bejelentkezés</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" title="Bezárás"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" class="card p-4 shadow-sm">
+        <div class="mb-3">
+            <label>Felhasználónév:</label>
+            <input type="text" name="username" class="form-control" required title="Felhasználónév" placeholder="Felhasználónév">
+        </div>
+        <div class="mb-3">
+            <label>Jelszó:</label>
+            <input type="password" name="password" class="form-control" required title="Jelszó" placeholder="Jelszó">
+        </div>
+        <button type="submit" class="btn btn-primary">Bejelentkezés</button>
+    </form>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
