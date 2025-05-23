@@ -2,12 +2,7 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-*.db
-*.sqlite3
-.env
-ini.env
 config.json
 arertesito.log
-instance/
 .vscode/
 tests/

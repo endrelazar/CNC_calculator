@@ -54,7 +54,7 @@ Or with Docker (if you add a Dockerfile):
 
 ```bash
 docker build -t cnc-app .
-docker run -p 5000:5000 --env-file .env cnc-app
+docker run -p 5000:5000 --env-file .env -v %cd%/config.json:/app/config.json cnc-app
 ```
 
 ## Testing

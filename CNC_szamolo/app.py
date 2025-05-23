@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, flash, session, url_for
-import szamitasok
+from CNC_szamolo import szamitasok
 from flask_sqlalchemy import SQLAlchemy
 import datetime
 from flask import Response
@@ -14,8 +14,9 @@ import io
 import os
 from werkzeug.security import check_password_hash
 from dotenv import load_dotenv
-from email_kuldo import kuld_email
+from CNC_szamolo.email_kuldo import kuld_email
 import logging
+
 #from werkzeug.security import generate_password_hash # Testing
 
 logging.basicConfig(
@@ -35,7 +36,8 @@ load_dotenv("ini.env")
 users = {"admin": os.getenv("USERPASS") }
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///adatok.db"
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "..", "adatok.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 app.secret_key = os.getenv("SECRET_KEY")
