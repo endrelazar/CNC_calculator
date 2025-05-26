@@ -16,8 +16,8 @@ A Flask-based web application for CNC machining calculations, parameter storage,
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/your-repo.git
-cd your-repo
+git clone https://github.com/endre.lazar/CNC_calculator.git
+cd CNC_calculator
 ```
 
 ### 2. Install dependencies
